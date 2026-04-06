@@ -1,0 +1,26 @@
+[
+  {
+    "title": "We open-sourced our tensor parallelism inference engine — 8x throughput on LLaMA-3",
+    "selftext": "After 8 months building at our startup we're releasing the core engine. It uses pipeline parallelism across 4 GPUs with async prefill scheduling. Benchmarks in the README.",
+    "permalink": "/r/MachineLearning/comments/abc123/inference_engine/",
+    "score": 892,
+    "created_utc": 1743724800,
+    "subreddit": "MachineLearning"
+  },
+  {
+    "title": "Why I switched from Airflow to DuckDB + dbt for our ML feature pipeline",
+    "selftext": "Airflow was overkill. For sub-1B row feature tables, DuckDB in-process is faster and way simpler to operate. Here's our architecture.",
+    "permalink": "/r/dataengineering/comments/def456/duckdb_features/",
+    "score": 445,
+    "created_utc": 1743638400,
+    "subreddit": "dataengineering"
+  },
+  {
+    "title": "My cat knocked over my coffee",
+    "selftext": "It was a Monday.",
+    "permalink": "/r/funny/comments/xyz/cat/",
+    "score": 50000,
+    "created_utc": 1743638400,
+    "subreddit": "funny"
+  }
+]
