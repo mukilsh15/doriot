@@ -1,0 +1,25 @@
+{
+  "hits": [
+    {
+      "title": "Show HN: Prefect 3.0 – open-source orchestration for AI pipelines",
+      "url": "https://github.com/PrefectHQ/prefect",
+      "points": 312,
+      "created_at": "2026-04-01T09:00:00.000Z",
+      "objectID": "100001"
+    },
+    {
+      "title": "Ask HN: What does your ML feature store look like in 2026?",
+      "url": null,
+      "points": 198,
+      "created_at": "2026-04-02T14:00:00.000Z",
+      "objectID": "100002"
+    },
+    {
+      "title": "I made a chocolate cake",
+      "url": "https://myblog.com/cake",
+      "points": 5,
+      "created_at": "2026-04-03T08:00:00.000Z",
+      "objectID": "100003"
+    }
+  ]
+}
