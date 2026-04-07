@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>TechCrunch</title>
+    <item>
+      <title>Anyscale raises $100M to scale Ray-based AI infrastructure</title>
+      <link>https://techcrunch.com/2026/04/01/anyscale-raises/</link>
+      <description>Anyscale, the company behind the Ray distributed computing framework, announced a $100M Series C to expand its managed infrastructure platform for AI workloads.</description>
+      <pubDate>Tue, 01 Apr 2026 10:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>New startup promises to fix data observability with AI agents</title>
+      <link>https://techcrunch.com/2026/04/02/data-observability-startup/</link>
+      <description>DataWatch emerges from stealth with a $12M seed round to bring autonomous data quality monitoring to modern data stacks.</description>
+      <pubDate>Wed, 02 Apr 2026 14:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Celebrity opens new restaurant in New York</title>
+      <link>https://techcrunch.com/2026/04/03/celebrity-restaurant/</link>
+      <description>A famous actor opened a new dining establishment.</description>
+      <pubDate>Thu, 03 Apr 2026 08:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
