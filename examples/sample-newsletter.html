@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Georgia, serif; max-width: 680px; margin: 40px auto; color: #1a1a1a; line-height: 1.6; }
+    h1 { font-size: 1.4em; border-bottom: 2px solid #1a1a1a; padding-bottom: 8px; }
+    h2 { font-size: 1.1em; margin-top: 2em; color: #333; }
+    .thesis { margin-bottom: 2.5em; }
+    .thesis-title { font-weight: bold; font-size: 1.05em; }
+    .why-now { font-style: italic; color: #555; margin: 0.5em 0; }
+    .signals { font-size: 0.9em; color: #444; }
+    .signals a { color: #0066cc; }
+    .category { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.05em; color: #888; }
+    .appendix { border-top: 1px solid #ddd; margin-top: 3em; padding-top: 1em; font-size: 0.85em; }
+    .appendix a { color: #444; }
+  </style>
+</head>
+<body>
+  <h1>BrainSync — AI & Data Infrastructure Signal</h1>
+  <p style="color:#888; font-size:0.9em;">Week of 2026-04-07</p>
+
+  <h2>This Week's Theses</h2>
+
+  
+  <div class="thesis">
+    <div class="category">inference infrastructure</div>
+    <div class="thesis-title">The Inference Cost Squeeze Creates a $1B Tooling Market</div>
+    <p>Every AI product team is bleeding on inference costs, and the gap between what naive serving delivers and what's achievable with speculative decoding and async prefill is now 5-10x. The next infrastructure winner abstracts this complexity behind a simple API. This is the Datadog moment for LLM serving.</p>
+    <div class="why-now">Why now: Speculative decoding only became production-stable in late 2025. Model sizes crossed a threshold where naive serving is economically unviable for any product at scale. The window for tooling is open now, before the hyperscalers absorb this layer.</div>
+    <div class="signals">
+      Supporting signals:
+      
+        <a href="https://github.com/vllm-project/vllm">vllm-project/vllm: 10x throughput via speculative decoding</a> (github), 
+      
+        <a href="https://techcrunch.com/2026/04/01/anyscale-raises/">Anyscale raises $100M to scale Ray-based AI infrastructure</a> (techcrunch)
+      
+    </div>
+  </div>
+  
+  <div class="thesis">
+    <div class="category">MLOps</div>
+    <div class="thesis-title">AI-Native Orchestration Displaces Airflow for the ML Stack</div>
+    <p>Airflow was built for ETL, not for workflows where tasks are probabilistic, latencies are variable, and retries require semantic awareness. The ML stack needs an orchestrator that treats LLM calls as first-class primitives — with built-in handling for rate limits, token budgets, and partial outputs.</p>
+    <div class="why-now">Why now: The volume of LLM-in-production deployments hit a critical mass in 2025 that made the impedance mismatch with existing orchestration intolerable. Prefect 3.0 and similar launches signal that the market is ready to pay for a purpose-built replacement.</div>
+    <div class="signals">
+      Supporting signals:
+      
+        <a href="https://news.ycombinator.com/item?id=100001">Show HN: Prefect 3.0 — AI-native pipeline orchestration</a> (hn), 
+      
+        <a href="https://reddit.com/r/dataengineering/post/duckdb">Why I switched from Airflow to DuckDB + dbt for our ML feature pipeline</a> (reddit)
+      
+    </div>
+  </div>
+  
+
+  <div class="appendix">
+    <strong>Raw Signals Appendix</strong><br>
+    
+      <a href="https://github.com/vllm-project/vllm">vllm-project/vllm: 10x throughput via speculative decoding</a> — github<br>
+    
+      <a href="https://news.ycombinator.com/item?id=100001">Show HN: Prefect 3.0 — AI-native pipeline orchestration</a> — hn<br>
+    
+      <a href="https://techcrunch.com/2026/04/01/anyscale-raises/">Anyscale raises $100M to scale Ray-based AI infrastructure</a> — techcrunch<br>
+    
+      <a href="https://reddit.com/r/dataengineering/post/duckdb">Why I switched from Airflow to DuckDB + dbt for our ML feature pipeline</a> — reddit<br>
+    
+  </div>
+</body>
+</html>
