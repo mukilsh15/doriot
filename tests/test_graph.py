@@ -29,9 +29,11 @@ MOCK_THESES_RESPONSE = json.dumps({
 @patch("brainsync.agents.researchers.hn._score_relevance")
 @patch("brainsync.agents.researchers.techcrunch._score_relevance")
 @patch("brainsync.agents.researchers.github._score_relevance")
-@patch("anthropic.Anthropic")
+@patch("brainsync.agents.synthesizer.OpenAI")
+@patch("brainsync.agents.thesis_writer.OpenAI")
 def test_full_graph_runs_end_to_end(
-    mock_anthropic_cls,
+    mock_thesis_openai_cls,
+    mock_synth_openai_cls,
     mock_gh_score,
     mock_tc_score,
     mock_hn_score,
@@ -68,21 +70,17 @@ def test_full_graph_runs_end_to_end(
 
     mock_httpx_get.side_effect = httpx_get_side_effect
 
-    # Both synthesizer and thesis_writer use anthropic.Anthropic — route by max_tokens
-    def messages_create_side_effect(*args, **kwargs):
-        msg = MagicMock()
-        max_tokens = kwargs.get("max_tokens", 0)
-        if max_tokens == 2000:
-            # synthesizer call
-            msg.content = [MagicMock(text=MOCK_TRENDS_RESPONSE)]
-        else:
-            # thesis_writer call (max_tokens=3000)
-            msg.content = [MagicMock(text=MOCK_THESES_RESPONSE)]
-        return msg
+    mock_synth_client = MagicMock()
+    mock_synth_resp = MagicMock()
+    mock_synth_resp.choices = [MagicMock(message=MagicMock(content=MOCK_TRENDS_RESPONSE))]
+    mock_synth_client.chat.completions.create.return_value = mock_synth_resp
+    mock_synth_openai_cls.return_value = mock_synth_client
 
-    mock_client = MagicMock()
-    mock_client.messages.create.side_effect = messages_create_side_effect
-    mock_anthropic_cls.return_value = mock_client
+    mock_thesis_client = MagicMock()
+    mock_thesis_resp = MagicMock()
+    mock_thesis_resp.choices = [MagicMock(message=MagicMock(content=MOCK_THESES_RESPONSE))]
+    mock_thesis_client.chat.completions.create.return_value = mock_thesis_resp
+    mock_thesis_openai_cls.return_value = mock_thesis_client
 
     mock_resend_resp = MagicMock()
     mock_resend_resp.raise_for_status.return_value = None

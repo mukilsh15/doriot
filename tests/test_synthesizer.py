@@ -46,13 +46,13 @@ MOCK_CLAUDE_RESPONSE = json.dumps({
 })
 
 
-@patch("brainsync.agents.synthesizer.anthropic.Anthropic")
+@patch("brainsync.agents.synthesizer.OpenAI")
 def test_synthesizer_returns_trends(mock_anthropic_cls):
     mock_client = MagicMock()
     mock_anthropic_cls.return_value = mock_client
     mock_message = MagicMock()
-    mock_message.content = [MagicMock(text=MOCK_CLAUDE_RESPONSE)]
-    mock_client.messages.create.return_value = mock_message
+    mock_message.choices = [MagicMock(message=MagicMock(content=MOCK_CLAUDE_RESPONSE))]
+    mock_client.chat.completions.create.return_value = mock_message
 
     from brainsync.agents.synthesizer import synthesizer
 
@@ -74,13 +74,13 @@ def test_synthesizer_returns_trends(mock_anthropic_cls):
     assert 0 in trends[0]["signal_ids"]
 
 
-@patch("brainsync.agents.synthesizer.anthropic.Anthropic")
+@patch("brainsync.agents.synthesizer.OpenAI")
 def test_synthesizer_formats_signals_for_prompt(mock_anthropic_cls):
     mock_client = MagicMock()
     mock_anthropic_cls.return_value = mock_client
     mock_message = MagicMock()
-    mock_message.content = [MagicMock(text=MOCK_CLAUDE_RESPONSE)]
-    mock_client.messages.create.return_value = mock_message
+    mock_message.choices = [MagicMock(message=MagicMock(content=MOCK_CLAUDE_RESPONSE))]
+    mock_client.chat.completions.create.return_value = mock_message
 
     from brainsync.agents.synthesizer import synthesizer
 
@@ -95,7 +95,7 @@ def test_synthesizer_formats_signals_for_prompt(mock_anthropic_cls):
     }
     synthesizer(state)
 
-    call_args = mock_client.messages.create.call_args
+    call_args = mock_client.chat.completions.create.call_args
     prompt_content = call_args.kwargs["messages"][0]["content"]
     assert "vllm achieves" in prompt_content
     assert "DuckDB" in prompt_content

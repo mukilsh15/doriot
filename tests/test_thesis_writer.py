@@ -43,13 +43,13 @@ MOCK_CLAUDE_RESPONSE = json.dumps({
 })
 
 
-@patch("brainsync.agents.thesis_writer.anthropic.Anthropic")
+@patch("brainsync.agents.thesis_writer.OpenAI")
 def test_thesis_writer_returns_theses(mock_anthropic_cls):
     mock_client = MagicMock()
     mock_anthropic_cls.return_value = mock_client
     mock_message = MagicMock()
-    mock_message.content = [MagicMock(text=MOCK_CLAUDE_RESPONSE)]
-    mock_client.messages.create.return_value = mock_message
+    mock_message.choices = [MagicMock(message=MagicMock(content=MOCK_CLAUDE_RESPONSE))]
+    mock_client.chat.completions.create.return_value = mock_message
 
     from brainsync.agents.thesis_writer import thesis_writer
 
@@ -71,13 +71,13 @@ def test_thesis_writer_returns_theses(mock_anthropic_cls):
     assert theses[0]["category"] == "inference infrastructure"
 
 
-@patch("brainsync.agents.thesis_writer.anthropic.Anthropic")
+@patch("brainsync.agents.thesis_writer.OpenAI")
 def test_thesis_writer_resolves_signal_ids_to_signals(mock_anthropic_cls):
     mock_client = MagicMock()
     mock_anthropic_cls.return_value = mock_client
     mock_message = MagicMock()
-    mock_message.content = [MagicMock(text=MOCK_CLAUDE_RESPONSE)]
-    mock_client.messages.create.return_value = mock_message
+    mock_message.choices = [MagicMock(message=MagicMock(content=MOCK_CLAUDE_RESPONSE))]
+    mock_client.chat.completions.create.return_value = mock_message
 
     from brainsync.agents.thesis_writer import thesis_writer
 

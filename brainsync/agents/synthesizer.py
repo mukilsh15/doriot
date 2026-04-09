@@ -1,13 +1,14 @@
 import json
+import os
 
-import anthropic
+from openai import OpenAI
 
 from brainsync.prompts import SYNTHESIZER
 from brainsync.state import NewsletterState, Trend
 
 
 def synthesizer(state: NewsletterState) -> dict:
-    client = anthropic.Anthropic()
+    client = OpenAI(api_key=os.environ.get("GROQ_API_KEY", ""), base_url="https://api.groq.com/openai/v1")
     signals = state["raw_signals"]
 
     signal_list = "\n".join(
@@ -15,11 +16,11 @@ def synthesizer(state: NewsletterState) -> dict:
     )
     prompt = SYNTHESIZER.format(signals=signal_list)
 
-    message = client.messages.create(
-        model="claude-opus-4-6",
+    response = client.chat.completions.create(
+        model="llama-3.1-70b-versatile",
         max_tokens=2000,
         messages=[{"role": "user", "content": prompt}],
     )
-    result = json.loads(message.content[0].text)
+    result = json.loads(response.choices[0].message.content)
     trends: list[Trend] = result["trends"]
     return {"synthesized_trends": trends}

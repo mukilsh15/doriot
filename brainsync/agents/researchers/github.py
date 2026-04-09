@@ -2,8 +2,8 @@ import json
 import os
 from datetime import datetime, timedelta, timezone
 
-import anthropic
 import httpx
+from openai import OpenAI
 
 from brainsync.prompts import RELEVANCE_SCORER
 from brainsync.state import NewsletterState, Signal
@@ -15,7 +15,7 @@ MIN_RELEVANCE = 0.4
 
 
 def github_researcher(state: NewsletterState) -> dict:
-    client = anthropic.Anthropic()
+    client = OpenAI(api_key=os.environ.get("GROQ_API_KEY", ""), base_url="https://api.groq.com/openai/v1")
     cutoff = (datetime.now(tz=timezone.utc) - timedelta(days=LOOKBACK_DAYS)).strftime(
         "%Y-%m-%d"
     )
@@ -53,12 +53,12 @@ def github_researcher(state: NewsletterState) -> dict:
     return {"raw_signals": signals}
 
 
-def _score_relevance(client: anthropic.Anthropic, title: str, summary: str) -> float:
+def _score_relevance(client: OpenAI, title: str, summary: str) -> float:
     prompt = RELEVANCE_SCORER.format(title=title, summary=summary)
-    message = client.messages.create(
-        model="claude-opus-4-6",
+    response = client.chat.completions.create(
+        model="llama-3.1-70b-versatile",
         max_tokens=50,
         messages=[{"role": "user", "content": prompt}],
     )
-    result = json.loads(message.content[0].text)
+    result = json.loads(response.choices[0].message.content)
     return float(result["score"])

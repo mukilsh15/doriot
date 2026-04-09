@@ -1,13 +1,14 @@
 import json
+import os
 
-import anthropic
+from openai import OpenAI
 
 from brainsync.prompts import THESIS_WRITER
 from brainsync.state import NewsletterState, Thesis
 
 
 def thesis_writer(state: NewsletterState) -> dict:
-    client = anthropic.Anthropic()
+    client = OpenAI(api_key=os.environ.get("GROQ_API_KEY", ""), base_url="https://api.groq.com/openai/v1")
     trends = state["synthesized_trends"]
     raw_signals = state["raw_signals"]
 
@@ -17,12 +18,12 @@ def thesis_writer(state: NewsletterState) -> dict:
     )
     prompt = THESIS_WRITER.format(trends=trend_text)
 
-    message = client.messages.create(
-        model="claude-opus-4-6",
+    response = client.chat.completions.create(
+        model="llama-3.1-70b-versatile",
         max_tokens=3000,
         messages=[{"role": "user", "content": prompt}],
     )
-    raw = json.loads(message.content[0].text)
+    raw = json.loads(response.choices[0].message.content)
     theses: list[Thesis] = []
 
     for t in raw["theses"]:
