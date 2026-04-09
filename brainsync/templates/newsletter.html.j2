@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Georgia, serif; max-width: 680px; margin: 40px auto; color: #1a1a1a; line-height: 1.6; }
+    h1 { font-size: 1.4em; border-bottom: 2px solid #1a1a1a; padding-bottom: 8px; }
+    h2 { font-size: 1.1em; margin-top: 2em; color: #333; }
+    .thesis { margin-bottom: 2.5em; }
+    .thesis-title { font-weight: bold; font-size: 1.05em; }
+    .why-now { font-style: italic; color: #555; margin: 0.5em 0; }
+    .signals { font-size: 0.9em; color: #444; }
+    .signals a { color: #0066cc; }
+    .category { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.05em; color: #888; }
+    .appendix { border-top: 1px solid #ddd; margin-top: 3em; padding-top: 1em; font-size: 0.85em; }
+    .appendix a { color: #444; }
+  </style>
+</head>
+<body>
+  <h1>BrainSync — AI & Data Infrastructure Signal</h1>
+  <p style="color:#888; font-size:0.9em;">Week of {{ run_date }}</p>
+
+  <h2>This Week's Theses</h2>
+
+  {% for thesis in theses %}
+  <div class="thesis">
+    <div class="category">{{ thesis.category }}</div>
+    <div class="thesis-title">{{ thesis.title }}</div>
+    <p>{{ thesis.point_of_view }}</p>
+    <div class="why-now">Why now: {{ thesis.why_now }}</div>
+    <div class="signals">
+      Supporting signals:
+      {% for signal in thesis.signals %}
+        <a href="{{ signal.url }}">{{ signal.title }}</a> ({{ signal.source }}){% if not loop.last %}, {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="appendix">
+    <strong>Raw Signals Appendix</strong><br>
+    {% for signal in all_signals %}
+      <a href="{{ signal.url }}">{{ signal.title }}</a> — {{ signal.source }}<br>
+    {% endfor %}
+  </div>
+</body>
+</html>
