@@ -15,6 +15,9 @@ MIN_RELEVANCE = 0.4
 
 
 def reddit_researcher(state: NewsletterState) -> dict:
+    if not os.environ.get("REDDIT_CLIENT_ID"):
+        return {"raw_signals": []}
+
     reddit = praw.Reddit(
         client_id=os.environ.get("REDDIT_CLIENT_ID", ""),
         client_secret=os.environ.get("REDDIT_CLIENT_SECRET", ""),
