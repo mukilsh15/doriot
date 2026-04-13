@@ -1,8 +1,9 @@
 import json
 import os
+import time
 
 import feedparser
-from openai import OpenAI
+from openai import OpenAI, RateLimitError
 
 from brainsync.prompts import RELEVANCE_SCORER
 from brainsync.state import NewsletterState, Signal
@@ -40,10 +41,16 @@ def techcrunch_researcher(state: NewsletterState) -> dict:
 
 def _score_relevance(client: OpenAI, title: str, summary: str) -> float:
     prompt = RELEVANCE_SCORER.format(title=title, summary=summary)
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        max_tokens=50,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    result = json.loads(response.choices[0].message.content)
-    return float(result["score"])
+    for attempt in range(5):
+        try:
+            response = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                max_tokens=50,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            result = json.loads(response.choices[0].message.content)
+            return float(result["score"])
+        except RateLimitError:
+            if attempt == 4:
+                raise
+            time.sleep(2 ** attempt + 2)
