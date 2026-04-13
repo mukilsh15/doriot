@@ -56,7 +56,7 @@ def _week_ago_ts() -> int:
 def _score_relevance(client: OpenAI, title: str, summary: str) -> float:
     prompt = RELEVANCE_SCORER.format(title=title, summary=summary)
     response = client.chat.completions.create(
-        model="llama-3.1-70b-versatile",
+        model="llama-3.3-70b-versatile",
         max_tokens=50,
         messages=[{"role": "user", "content": prompt}],
     )

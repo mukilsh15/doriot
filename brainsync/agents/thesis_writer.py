@@ -19,7 +19,7 @@ def thesis_writer(state: NewsletterState) -> dict:
     prompt = THESIS_WRITER.format(trends=trend_text)
 
     response = client.chat.completions.create(
-        model="llama-3.1-70b-versatile",
+        model="llama-3.3-70b-versatile",
         max_tokens=3000,
         messages=[{"role": "user", "content": prompt}],
     )
